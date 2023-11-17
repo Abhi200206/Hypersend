@@ -19,13 +19,13 @@
         function del()
         { 
             confirm("Are you sure you want to delete ?")
-            var xhr = new XMLHttpRequest();
+            let xhr = new XMLHttpRequest();
 
              xhr.open('DELETE', '/delete', true);
 
             xhr.onload = function () {
              if (xhr.status >= 200 && xhr.status < 400) {
-        var data = JSON.parse(xhr.responseText);
+        let data = JSON.parse(xhr.responseText);
         
     }
     
@@ -38,15 +38,15 @@ displayData();
 
 
         function getData() {
-            alert('button clicked')
-        var xhr = new XMLHttpRequest();
+            alert('retriving Data !!!')
+        let xhr = new XMLHttpRequest();
         let code = document.getElementById('code').value;
 
         xhr.open('GET', '/getdata?code='+code, true);
 
         xhr.onload = function () {
             if (xhr.status >= 200 && xhr.status < 400) {
-                var data = (xhr.responseText);
+                let data = (xhr.responseText);
                 displayData(data);
             }
         };
@@ -60,7 +60,7 @@ displayData();
 
     function displayData(data) {
     console.log("Data received:", data);
-    var display = document.getElementById('display');
+    let display = document.getElementById('display');
     display.textContent = data;
 }
 function displayData1(data) {
@@ -71,37 +71,37 @@ function displayData1(data) {
 
 
         function sendData() {
-            // Get the input value
+            
             let message = document.getElementById('message').value;
             let code = document.getElementById('code').value;
 
-            // Create a new XMLHttpRequest object
+            
             let xhr = new XMLHttpRequest();
 
-            // Configure it to send a POST request to the backend
+          
             xhr.open('POST', '/send', true);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
-            // Define what happens on successful data submission
+           
             xhr.onload = function () {
                 if (xhr.status >= 200 && xhr.status < 400) {
-                    var data = (xhr.responseText);
+                    let data = (xhr.responseText);
                     displayData1(data);
                     console.log('Data sent successfully!');
                 }
             };
 
-            // Define what happens in case of an error
+            
             xhr.onerror = function () {
                 console.error('Error sending data.');
             };
             p1=new Promise((reject,resolve)=>{
 
             
-            // Convert the data to JSON format and send it
+            
             xhr.send(JSON.stringify({ msg: message, unqcode: code }))
             document.getElementById('message').value=" ";
-            //document.getElementById('code').value=" ";
+           
         }).then(
             setTimeout(()=>{
             alert("message sent successfully !")
