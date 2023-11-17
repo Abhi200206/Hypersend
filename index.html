@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="message">Message</label>
+    <input type="text" id="message" name="message">
+    <label for="code">Code</label>
+    <input type="number" id="code" name="code">
+    <button onclick="sendData()">Send</button>
+    <button onclick="getData()">Receive</button><br>
+    <label for="display">received message:</label>
+    <p id="display"></p>
+
+    <script>
+        function del()
+        { 
+            confirm("Are you sure you want to delete ?")
+            var xhr = new XMLHttpRequest();
+
+             xhr.open('DELETE', '/delete', true);
+
+            xhr.onload = function () {
+             if (xhr.status >= 200 && xhr.status < 400) {
+        var data = JSON.parse(xhr.responseText);
+        
+    }
+    
+};
+xhr.send();
+displayData();
+
+
+        }
+
+
+        function getData() {
+            alert('button clicked')
+        var xhr = new XMLHttpRequest();
+        let code = document.getElementById('code').value;
+
+        xhr.open('GET', '/getdata?code='+code, true);
+
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 400) {
+                var data = (xhr.responseText);
+                displayData(data);
+            }
+        };
+
+        xhr.onerror = function () {
+            console.error('Error fetching data.');
+        };
+
+        xhr.send();
+    }
+
+    function displayData(data) {
+    console.log("Data received:", data);
+    var display = document.getElementById('display');
+    display.textContent = data;
+}
+function displayData1(data) {
+    console.log("Data received:", data);
+    document.getElementById('code').value=data;
+    
+}
+
+
+        function sendData() {
+            // Get the input value
+            let message = document.getElementById('message').value;
+            let code = document.getElementById('code').value;
+
+            // Create a new XMLHttpRequest object
+            let xhr = new XMLHttpRequest();
+
+            // Configure it to send a POST request to the backend
+            xhr.open('POST', '/send', true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+            // Define what happens on successful data submission
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    var data = (xhr.responseText);
+                    displayData1(data);
+                    console.log('Data sent successfully!');
+                }
+            };
+
+            // Define what happens in case of an error
+            xhr.onerror = function () {
+                console.error('Error sending data.');
+            };
+            p1=new Promise((reject,resolve)=>{
+
+            
+            // Convert the data to JSON format and send it
+            xhr.send(JSON.stringify({ msg: message, unqcode: code }))
+            document.getElementById('message').value=" ";
+            //document.getElementById('code').value=" ";
+        }).then(
+            setTimeout(()=>{
+            alert("message sent successfully !")
+        },1000));
+
+        
+            
+
+        }
+    </script>
+</body>
+</html>
