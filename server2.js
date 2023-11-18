@@ -1,3 +1,5 @@
+require('dotenv').config()
+console.log(process.env)
 const express = require('express');
 const app = express();
 const mysql = require('mysql2');
@@ -8,14 +10,14 @@ console.log("server started");
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 
 const con = mysql.createConnection({
-    host: "localhost",
-    user: "user1",
-    password: "pswd123",
-    database: "user"
+    host: "process.env.HOST",
+    user: "process.env.USER",
+    password: "proces.env.PASSWORD",
+    database: "process.env.DATABASE"
 });
 
 con.connect(function (err) {

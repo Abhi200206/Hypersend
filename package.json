@@ -4,12 +4,14 @@
   "description": "just to create a http server",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node server2.js",
+    "start": "node server2.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
     "expres": "^0.0.5",
     "express": "^4.18.2",
     "mysql2": "^3.6.3"
